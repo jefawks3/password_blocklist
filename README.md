@@ -81,6 +81,39 @@ checker.blocklisted?("pokemon")
 => true
 ```
 
+### Rails Integration
+
+The `password_blocklist` validator is available for Rails projects. 
+
+#### Basic usage:
+
+```ruby
+validates :password, presence: true, password_blocklist: true, if: -> (u) { u.new_record? || u.password_changed? }
+```
+
+*Note: `password_blocklist` validations will skip blank and nil values. If the password is required, you will need to
+use another validator, like `presence`, to ensure the password is not blank.*
+
+**Options:**
+
+```ruby
+validates :password, password_blocklist: { list_size: nil, message: :password_blocked }
+```
+
+- `list_size` - the list to check the password against (defaults to: `nil`).
+- `message` - a custom error message (defaults to: `:password_blocked`).
+
+#### I18n
+
+You can change the error message using I18n.
+
+```yaml
+en:
+  errors:
+    messages:
+      password_blocked: is blocked
+```
+
 ## Supported Ruby versions
 
 password_blocklist supports MRI Ruby 2.5+ and Ruby 3.x. The specific Ruby versions we build and test on can be found on this Github Action [workflow file](https://github.com/gchan/password_blocklist/blob/main/.github/workflows/ruby.yml).

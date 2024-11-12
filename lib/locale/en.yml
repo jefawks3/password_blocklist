@@ -1,0 +1,4 @@
+en:
+  errors:
+    messages:
+      password_blocked: is blocked
